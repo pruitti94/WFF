@@ -35,7 +35,7 @@ def p_wff_3(p):
 
 def p_wff_4(p):
   'wff : wff AND wff'
-  p[0] = ['and', p[1],p[3]]
+  p[0] = [p[1],p[3]]
 
 def p_wff_5(p):
   'wff : OR wff'
@@ -43,15 +43,15 @@ def p_wff_5(p):
 
 def p_wff_6(p):
   'wff : NOT wff'
-  p[0] = ['not', p[2]]
+  p[0] = [p[2]]
 
 def p_quant_1(p):
-  'quant : LPARENT FORALL quant RPARENT LPARENT wff RPARENT'
-  p[0] = ['for all', p[3],p[6]]
+  'wff : LPARENT FORALL quant RPARENT LPARENT wff RPARENT'
+  p[0] = ['forall', p[3],p[6]]
 
 def p_quant_1(p):
-  'quant : LPARENT THEREEXISTS quant RPARENT LPARENT wff RPARENT'
-  p[0] = ['for all', p[3],p[6]]
+  'wff : LPARENT EXISTS quant RPARENT LPARENT wff RPARENT'
+  p[0] = ['exists', p[3],p[6]]
   
 def p_quant_3(p):
   'quant : arg'

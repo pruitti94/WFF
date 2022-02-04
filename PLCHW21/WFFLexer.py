@@ -1,6 +1,6 @@
 import ply.lex as lex
 
-reserved = { 'with': 'WITH', 'if': 'IF', 'and':'AND','not':'NOT', 'or':'OR', 'forall':'FORALL', 'thereexists':'THEREEXISTS'}
+reserved = { 'with': 'WITH', 'if': 'IF', 'and':'AND','not':'NOT', 'or':'OR', 'forall':'FORALL', 'exists':'EXISTS'}
 
 tokens = ['NUMBER','ID','LPARENT','RPARENT','SEMI','STRING','COMMA'] + \
   list(reserved.values())
@@ -15,7 +15,7 @@ def t_AND(t): r'[aA][nN][dD]'; return t
 def t_NOT(t): r'[nN][oO][tT]'; return t
 def t_OR(t):r'[oO][rR]'; return t
 def t_FORALL(t):r'[fF][oO][rR][aA][lL][lL]'; return t
-def t_THEREEXISTS(t):r'[tT][hH][eE][rR][eE][eE][xX][iI][sS][tT][sS]'; return t
+def t_EXISTS(t):r'[eE][xX][iI][sS][tT][sS]'; return t
 
 
 
@@ -48,8 +48,7 @@ def t_error(t):
 lexer = lex.lex()
 ## Test it out
 data = '''
-(thereexists x1, x2)(pop(x1,x2));
-'''
+(exists r,t,u,v,w,x,y,z)( employee(q,r,s,t,u,v,w,x,y,z) and not ((exists m,n,o,p)(dependent(t,m,n,o,p)) ) );'''
 #
 ## Give the lexer some input
 print("Tokenizing: ",data)

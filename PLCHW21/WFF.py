@@ -1,37 +1,23 @@
 from WFFParser import parser
 
 def eval_expression(tree):
-  if tree[0] == 'num':
-    return tree[1]
-  elif tree[0] == 'id':
-    return 'ERROR: Cannot evaluate ID '+tree[1]
-  elif tree[0] == '+' or tree[0] == '-' or tree[0] == '*' or tree[0] == '/':
-    v1 = eval_expression(tree[1])
-    if isinstance(v1,str):
-      return v1
-    v2 = eval_expression(tree[2])
-    if isinstance(v2,str):
-      return v2
-    if tree[0] == '+':
-      return v1+v2
-    elif tree[0] == '-':
-      return v1-v2
-    elif tree[0] == '*':
-      return v1*v2
-    elif v2 != 0:
-      return v1/v2
-    else:
-      return 'ERROR: Divide by Zero'
-  elif tree[0] == 'if':
-    v1 = eval_expression(tree[1])
-    if isinstance(v1,str):
-      return v1
-    if v1 != 0:
-      return eval_expression(tree[2])
-    else:
-      return eval_expression(tree[3])
-  else: #with clause
-    return "WITH not implemented!"
+  numOfElements= len(tree)
+  print('We have ' + str(numOfElements) + ' elements in our treee!')
+  print('The elements are the following')
+  for x in range(len(tree)):
+    print(tree[x])
+  if tree[0] == 'WFF':
+    print('THIS IS  A WFF')
+    for x in range(len(tree[1])):
+      value = tree[1][x][0]
+      if value == 'variable':
+              print('this is a variable ' + tree[1][x][1])
+  if tree[0] == 'exists':
+    print('This is a quant statement.')
+    print('The quant statment applies to the following:')
+    for x in range(len(tree[1])):
+      print(tree[1][x])
+
 
 def read_input():
   result = ''
@@ -56,13 +42,13 @@ def main():
       print(inst.args[0])
       continue
     print(tree)
-    #try:
-    # answer = eval_expression(tree)
-    # if isinstance(answer,str):
-    #   print('\nEVALUATION ERROR: '+answer+'\n')
-    # else:
-    #   print('\nThe value is '+str(answer)+'\n')
-    #except Exception as inst:
-    # print(inst.args[0])
+    try:
+     answer = eval_expression(tree)
+     if isinstance(answer,str):
+       print('\nEVALUATION ERROR: '+answer+'\n')
+     else:
+       print('\nThe value is '+str(answer)+'\n')
+    except Exception as inst:
+      print(inst.args[0])
  
 main()

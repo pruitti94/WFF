@@ -20,7 +20,7 @@ Rule 8     wff -> arg COMMA wff
 Rule 9     wff -> wff AND wff
 Rule 10    wff -> OR wff
 Rule 11    wff -> NOT wff
-Rule 12    quant -> LPARENT THEREEXISTS quant RPARENT LPARENT wff RPARENT
+Rule 12    wff -> LPARENT EXISTS quant RPARENT LPARENT wff RPARENT
 Rule 13    quant -> arg
 Rule 14    quant -> arg COMMA quant
 
@@ -28,6 +28,7 @@ Terminals, with rules where they appear
 
 AND                  : 9
 COMMA                : 8 14
+EXISTS               : 12
 FORALL               : 
 ID                   : 5 6
 IF                   : 
@@ -38,7 +39,6 @@ OR                   : 10
 RPARENT              : 6 12 12
 SEMI                 : 1 2
 STRING               : 3
-THEREEXISTS          : 12
 WITH                 : 
 error                : 
 
@@ -62,7 +62,7 @@ state 0
     (9) wff -> . wff AND wff
     (10) wff -> . OR wff
     (11) wff -> . NOT wff
-    (12) quant -> . LPARENT THEREEXISTS quant RPARENT LPARENT wff RPARENT
+    (12) wff -> . LPARENT EXISTS quant RPARENT LPARENT wff RPARENT
     (13) quant -> . arg
     (14) quant -> . arg COMMA quant
     (3) arg -> . STRING
@@ -117,9 +117,9 @@ state 4
 
 state 5
 
-    (12) quant -> LPARENT . THEREEXISTS quant RPARENT LPARENT wff RPARENT
+    (12) wff -> LPARENT . EXISTS quant RPARENT LPARENT wff RPARENT
 
-    THEREEXISTS     shift and go to state 15
+    EXISTS          shift and go to state 15
 
 
 state 6
@@ -146,6 +146,7 @@ state 7
     (9) wff -> . wff AND wff
     (10) wff -> . OR wff
     (11) wff -> . NOT wff
+    (12) wff -> . LPARENT EXISTS quant RPARENT LPARENT wff RPARENT
     (3) arg -> . STRING
     (4) arg -> . NUMBER
     (5) arg -> . ID
@@ -153,6 +154,7 @@ state 7
     ID              shift and go to state 4
     OR              shift and go to state 7
     NOT             shift and go to state 8
+    LPARENT         shift and go to state 5
     STRING          shift and go to state 9
     NUMBER          shift and go to state 10
 
@@ -168,6 +170,7 @@ state 8
     (9) wff -> . wff AND wff
     (10) wff -> . OR wff
     (11) wff -> . NOT wff
+    (12) wff -> . LPARENT EXISTS quant RPARENT LPARENT wff RPARENT
     (3) arg -> . STRING
     (4) arg -> . NUMBER
     (5) arg -> . ID
@@ -175,6 +178,7 @@ state 8
     ID              shift and go to state 4
     OR              shift and go to state 7
     NOT             shift and go to state 8
+    LPARENT         shift and go to state 5
     STRING          shift and go to state 9
     NUMBER          shift and go to state 10
 
@@ -217,6 +221,7 @@ state 12
     (9) wff -> . wff AND wff
     (10) wff -> . OR wff
     (11) wff -> . NOT wff
+    (12) wff -> . LPARENT EXISTS quant RPARENT LPARENT wff RPARENT
     (3) arg -> . STRING
     (4) arg -> . NUMBER
     (5) arg -> . ID
@@ -224,6 +229,7 @@ state 12
     ID              shift and go to state 4
     OR              shift and go to state 7
     NOT             shift and go to state 8
+    LPARENT         shift and go to state 5
     STRING          shift and go to state 9
     NUMBER          shift and go to state 10
 
@@ -246,6 +252,7 @@ state 14
     (9) wff -> . wff AND wff
     (10) wff -> . OR wff
     (11) wff -> . NOT wff
+    (12) wff -> . LPARENT EXISTS quant RPARENT LPARENT wff RPARENT
     (3) arg -> . STRING
     (4) arg -> . NUMBER
     (5) arg -> . ID
@@ -253,6 +260,7 @@ state 14
     ID              shift and go to state 4
     OR              shift and go to state 7
     NOT             shift and go to state 8
+    LPARENT         shift and go to state 5
     STRING          shift and go to state 9
     NUMBER          shift and go to state 10
 
@@ -261,15 +269,13 @@ state 14
 
 state 15
 
-    (12) quant -> LPARENT THEREEXISTS . quant RPARENT LPARENT wff RPARENT
-    (12) quant -> . LPARENT THEREEXISTS quant RPARENT LPARENT wff RPARENT
+    (12) wff -> LPARENT EXISTS . quant RPARENT LPARENT wff RPARENT
     (13) quant -> . arg
     (14) quant -> . arg COMMA quant
     (3) arg -> . STRING
     (4) arg -> . NUMBER
     (5) arg -> . ID
 
-    LPARENT         shift and go to state 5
     STRING          shift and go to state 9
     NUMBER          shift and go to state 10
     ID              shift and go to state 24
@@ -287,7 +293,7 @@ state 16
     (9) wff -> . wff AND wff
     (10) wff -> . OR wff
     (11) wff -> . NOT wff
-    (12) quant -> . LPARENT THEREEXISTS quant RPARENT LPARENT wff RPARENT
+    (12) wff -> . LPARENT EXISTS quant RPARENT LPARENT wff RPARENT
     (13) quant -> . arg
     (14) quant -> . arg COMMA quant
     (3) arg -> . STRING
@@ -366,7 +372,7 @@ state 21
 
 state 22
 
-    (12) quant -> LPARENT THEREEXISTS quant . RPARENT LPARENT wff RPARENT
+    (12) wff -> LPARENT EXISTS quant . RPARENT LPARENT wff RPARENT
 
     RPARENT         shift and go to state 29
 
@@ -418,6 +424,7 @@ state 27
     (9) wff -> . wff AND wff
     (10) wff -> . OR wff
     (11) wff -> . NOT wff
+    (12) wff -> . LPARENT EXISTS quant RPARENT LPARENT wff RPARENT
     (3) arg -> . STRING
     (4) arg -> . NUMBER
     (5) arg -> . ID
@@ -425,6 +432,7 @@ state 27
     ID              shift and go to state 4
     OR              shift and go to state 7
     NOT             shift and go to state 8
+    LPARENT         shift and go to state 5
     STRING          shift and go to state 9
     NUMBER          shift and go to state 10
 
@@ -442,7 +450,7 @@ state 28
 
 state 29
 
-    (12) quant -> LPARENT THEREEXISTS quant RPARENT . LPARENT wff RPARENT
+    (12) wff -> LPARENT EXISTS quant RPARENT . LPARENT wff RPARENT
 
     LPARENT         shift and go to state 31
 
@@ -450,14 +458,12 @@ state 29
 state 30
 
     (14) quant -> arg COMMA . quant
-    (12) quant -> . LPARENT THEREEXISTS quant RPARENT LPARENT wff RPARENT
     (13) quant -> . arg
     (14) quant -> . arg COMMA quant
     (3) arg -> . STRING
     (4) arg -> . NUMBER
     (5) arg -> . ID
 
-    LPARENT         shift and go to state 5
     STRING          shift and go to state 9
     NUMBER          shift and go to state 10
     ID              shift and go to state 24
@@ -467,13 +473,14 @@ state 30
 
 state 31
 
-    (12) quant -> LPARENT THEREEXISTS quant RPARENT LPARENT . wff RPARENT
+    (12) wff -> LPARENT EXISTS quant RPARENT LPARENT . wff RPARENT
     (6) wff -> . ID LPARENT wff RPARENT
     (7) wff -> . arg
     (8) wff -> . arg COMMA wff
     (9) wff -> . wff AND wff
     (10) wff -> . OR wff
     (11) wff -> . NOT wff
+    (12) wff -> . LPARENT EXISTS quant RPARENT LPARENT wff RPARENT
     (3) arg -> . STRING
     (4) arg -> . NUMBER
     (5) arg -> . ID
@@ -481,6 +488,7 @@ state 31
     ID              shift and go to state 4
     OR              shift and go to state 7
     NOT             shift and go to state 8
+    LPARENT         shift and go to state 5
     STRING          shift and go to state 9
     NUMBER          shift and go to state 10
 
@@ -489,7 +497,7 @@ state 31
 
 state 32
 
-    (12) quant -> LPARENT THEREEXISTS quant RPARENT LPARENT wff . RPARENT
+    (12) wff -> LPARENT EXISTS quant RPARENT LPARENT wff . RPARENT
     (9) wff -> wff . AND wff
 
     RPARENT         shift and go to state 33
@@ -498,10 +506,11 @@ state 32
 
 state 33
 
-    (12) quant -> LPARENT THEREEXISTS quant RPARENT LPARENT wff RPARENT .
+    (12) wff -> LPARENT EXISTS quant RPARENT LPARENT wff RPARENT .
 
-    SEMI            reduce using rule 12 (quant -> LPARENT THEREEXISTS quant RPARENT LPARENT wff RPARENT .)
-    RPARENT         reduce using rule 12 (quant -> LPARENT THEREEXISTS quant RPARENT LPARENT wff RPARENT .)
+    SEMI            reduce using rule 12 (wff -> LPARENT EXISTS quant RPARENT LPARENT wff RPARENT .)
+    AND             reduce using rule 12 (wff -> LPARENT EXISTS quant RPARENT LPARENT wff RPARENT .)
+    RPARENT         reduce using rule 12 (wff -> LPARENT EXISTS quant RPARENT LPARENT wff RPARENT .)
 
 WARNING: 
 WARNING: Conflicts:
