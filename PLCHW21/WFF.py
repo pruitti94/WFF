@@ -1,23 +1,43 @@
 from WFFParser import parser
 
-def eval_expression(tree):
-  numOfElements= len(tree)
-  print('We have ' + str(numOfElements) + ' elements in our treee!')
-  print('The elements are the following')
-  for x in range(len(tree)):
-    print(tree[x])
-  if tree[0] == 'WFF':
-    print('THIS IS  A WFF')
-    for x in range(len(tree[1])):
-      value = tree[1][x][0]
-      if value == 'variable':
-              print('this is a variable ' + tree[1][x][1])
-  if tree[0] == 'exists':
-    print('This is a quant statement.')
-    print('The quant statment applies to the following:')
-    for x in range(len(tree[1])):
-      print(tree[1][x])
-
+def eval(tree):
+  #print('OUR TREE HAS ' + str(len(tree)) + ' elements')
+  if(tree[0]) == 'WFF':
+   eval_wff(tree)
+  
+    
+def eval_wff(tree):
+  #print(tree[1])
+  print(len(tree[1]))
+  print(tree[1])
+  return(print('DONE'))
+  
+def eval_quant(tree):
+  return(print('THIS IS A QUANTIFIER'))
+  
+  #boundVariableList = []
+  #numOfElements= len(tree)
+  #print('WE HAVE ' + str(numOfElements) + ' ELEMENTS IN OUR TREE!')
+  #for x in range(len(tree)):
+    #print('#' + str(x) + ' element is ' + str(tree[x]))
+#    if tree[x][0] == 'EXISTS':
+#        print('WE HAVE AN EXIST QUANTIFIER HERE')
+#        print('THIS APPLIES TO THE FOLLOWING VARIABLES')
+#        for y in range(len(tree[x][1])):
+#            print(tree[x][1][y])
+#            boundVariableList.append(tree[x][1][y][1])
+#    if tree[x][0] == 'FORALL':
+#        print('WE HAVE A FORALL QUANTIFIER HERE')
+#        print('THIS APPLIES TO THE FOLLOWING VARIABLES')
+#        for y in range(len(tree[x][1])):
+#            print(tree[x][1][y])
+#            boundVariableList.append(tree[x][1][y])
+#    if tree[x][0] == 'NOT':
+#        print('WE HAVE A NOT STATEMENT HERE')
+#
+#  print('ALL OF THE BOUND VARIABLES ARE BELOW')
+#  print('************************************')
+#  print(boundVariableList)
 
 def read_input():
   result = ''
@@ -43,7 +63,7 @@ def main():
       continue
     print(tree)
     try:
-     answer = eval_expression(tree)
+     answer = eval(tree)
      if isinstance(answer,str):
        print('\nEVALUATION ERROR: '+answer+'\n')
      else:

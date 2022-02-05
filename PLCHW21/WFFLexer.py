@@ -47,16 +47,17 @@ def t_error(t):
 
 lexer = lex.lex()
 ## Test it out
-data = '''
-(exists r,t,u,v,w,x,y,z)( employee(q,r,s,t,u,v,w,x,y,z) and not ((exists m,n,o,p)(dependent(t,m,n,o,p)) ) );'''
+#data = '''
+#(exists r)(f(r1, r2));
+#'''
 #
 ## Give the lexer some input
-print("Tokenizing: ",data)
-lexer.input(data)
+#print("Tokenizing: ",data)
+#lexer.input(data)
 #
 ## Tokenize
-while True:
-    tok = lexer.token()
-    if not tok:
-        break      # No more input
-    print(tok)
+#while True:
+#    tok = lexer.token()
+#    if not tok:
+#        break      # No more input
+#    print(tok)

@@ -24,6 +24,10 @@ def p_arg_3(p):
 def p_wff_1(p):
   'wff : ID LPARENT wff RPARENT'
   p[0] = ['WFF', p[3]]
+  
+def p_wff_21(p):
+  'wff : LPARENT wff RPARENT'
+  p[0] = ['WFF', p[2]]
     
 def p_wff_2(p):
   'wff : arg'
@@ -35,31 +39,36 @@ def p_wff_3(p):
 
 def p_wff_4(p):
   'wff : wff AND wff'
-  p[0] = [p[1],p[3]]
+  p[0] = ['WFF',[p[1],p[3]]]
 
 def p_wff_5(p):
   'wff : OR wff'
-  p[0] = ['or', p[2]]
+  p[0] = ['WFF','or',p[2]]
 
 def p_wff_6(p):
   'wff : NOT wff'
-  p[0] = [p[2]]
+  p[0] = p[2]
+
+def p_wff_7(p):
+  'wff : LPARENT quant RPARENT LPARENT wff RPARENT'
+  p[0] = [p[2],p[5]]
 
 def p_quant_1(p):
-  'wff : LPARENT FORALL quant RPARENT LPARENT wff RPARENT'
-  p[0] = ['forall', p[3],p[6]]
-
-def p_quant_1(p):
-  'wff : LPARENT EXISTS quant RPARENT LPARENT wff RPARENT'
-  p[0] = ['exists', p[3],p[6]]
+  'quant : FORALL quant'
+  p[0] = ['FORALL',p[2]]
+  
+def p_quant_2(p):
+  'quant : EXISTS quant'
+  p[0] = ['EXISTS',p[2]]
   
 def p_quant_3(p):
-  'quant : arg'
-  p[0] = [p[1]]
-
-def p_quant_4(p):
   'quant : arg COMMA quant'
   p[0] = [p[1]] + p[3]
+
+def p_quant_4(p):
+  'quant : arg'
+  p[0] =[p[1]]
+  
 
 def p_error(p):
   print("Syntax error in input!")
