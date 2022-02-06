@@ -11,15 +11,15 @@ def p_waeStart_2(p):
   
 def p_arg_1(p):
   'arg : STRING'
-  p[0] = ['string',p[1]]
+  p[0] = p[1]
   
 def p_arg_2(p):
   'arg : NUMBER'
-  p[0] = ['number',p[1]]
+  p[0] = p[1]
 
 def p_arg_3(p):
   'arg : ID'
-  p[0] = ['variable',p[1]]
+  p[0] = p[1]
   
 def p_wff_1(p):
   'wff : ID LPARENT wff RPARENT'
@@ -39,7 +39,7 @@ def p_wff_3(p):
 
 def p_wff_4(p):
   'wff : wff AND wff'
-  p[0] = ['WFF',[p[1],p[3]]]
+  p[0] = p[1]+p[3]
 
 def p_wff_5(p):
   'wff : OR wff'
@@ -51,15 +51,15 @@ def p_wff_6(p):
 
 def p_wff_7(p):
   'wff : LPARENT quant RPARENT LPARENT wff RPARENT'
-  p[0] = [p[2],p[5]]
+  p[0] = [['QUANT',p[2]],p[5]]
 
 def p_quant_1(p):
   'quant : FORALL quant'
-  p[0] = ['FORALL',p[2]]
+  p[0] = p[2]
   
 def p_quant_2(p):
   'quant : EXISTS quant'
-  p[0] = ['EXISTS',p[2]]
+  p[0] = p[2]
   
 def p_quant_3(p):
   'quant : arg COMMA quant'
