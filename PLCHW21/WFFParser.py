@@ -42,8 +42,8 @@ def p_wff_4(p):
   p[0] = p[1]+p[3]
 
 def p_wff_5(p):
-  'wff : OR wff'
-  p[0] = ['WFF','or',p[2]]
+  'wff : wff OR wff'
+  p[0] = p[1]+p[3]
 
 def p_wff_6(p):
   'wff : NOT wff'

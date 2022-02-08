@@ -18,7 +18,7 @@ Rule 7     wff -> LPARENT wff RPARENT
 Rule 8     wff -> arg
 Rule 9     wff -> arg COMMA wff
 Rule 10    wff -> wff AND wff
-Rule 11    wff -> OR wff
+Rule 11    wff -> wff OR wff
 Rule 12    wff -> NOT wff
 Rule 13    wff -> LPARENT quant RPARENT LPARENT wff RPARENT
 Rule 14    quant -> FORALL quant
@@ -49,7 +49,7 @@ Nonterminals, with rules where they appear
 arg                  : 8 9 16 17
 quant                : 2 13 14 15 16
 waeStart             : 0
-wff                  : 1 6 7 9 10 10 11 12 13
+wff                  : 1 6 7 9 10 10 11 11 12 13
 
 Parsing method: LALR
 
@@ -63,7 +63,7 @@ state 0
     (8) wff -> . arg
     (9) wff -> . arg COMMA wff
     (10) wff -> . wff AND wff
-    (11) wff -> . OR wff
+    (11) wff -> . wff OR wff
     (12) wff -> . NOT wff
     (13) wff -> . LPARENT quant RPARENT LPARENT wff RPARENT
     (14) quant -> . FORALL quant
@@ -76,12 +76,11 @@ state 0
 
     ID              shift and go to state 4
     LPARENT         shift and go to state 5
-    OR              shift and go to state 7
-    NOT             shift and go to state 8
-    FORALL          shift and go to state 9
-    EXISTS          shift and go to state 10
-    STRING          shift and go to state 11
-    NUMBER          shift and go to state 12
+    NOT             shift and go to state 7
+    FORALL          shift and go to state 8
+    EXISTS          shift and go to state 9
+    STRING          shift and go to state 10
+    NUMBER          shift and go to state 11
 
     waeStart                       shift and go to state 1
     wff                            shift and go to state 2
@@ -98,9 +97,11 @@ state 2
 
     (1) waeStart -> wff . SEMI
     (10) wff -> wff . AND wff
+    (11) wff -> wff . OR wff
 
-    SEMI            shift and go to state 13
-    AND             shift and go to state 14
+    SEMI            shift and go to state 12
+    AND             shift and go to state 13
+    OR              shift and go to state 14
 
 
 state 3
@@ -119,6 +120,7 @@ state 4
     COMMA           reduce using rule 5 (arg -> ID .)
     SEMI            reduce using rule 5 (arg -> ID .)
     AND             reduce using rule 5 (arg -> ID .)
+    OR              reduce using rule 5 (arg -> ID .)
     RPARENT         reduce using rule 5 (arg -> ID .)
 
 
@@ -131,7 +133,7 @@ state 5
     (8) wff -> . arg
     (9) wff -> . arg COMMA wff
     (10) wff -> . wff AND wff
-    (11) wff -> . OR wff
+    (11) wff -> . wff OR wff
     (12) wff -> . NOT wff
     (13) wff -> . LPARENT quant RPARENT LPARENT wff RPARENT
     (14) quant -> . FORALL quant
@@ -144,12 +146,11 @@ state 5
 
     ID              shift and go to state 4
     LPARENT         shift and go to state 5
-    OR              shift and go to state 7
-    NOT             shift and go to state 8
-    FORALL          shift and go to state 9
-    EXISTS          shift and go to state 10
-    STRING          shift and go to state 11
-    NUMBER          shift and go to state 12
+    NOT             shift and go to state 7
+    FORALL          shift and go to state 8
+    EXISTS          shift and go to state 9
+    STRING          shift and go to state 10
+    NUMBER          shift and go to state 11
 
     wff                            shift and go to state 17
     quant                          shift and go to state 18
@@ -166,6 +167,7 @@ state 6
   ! reduce/reduce conflict for RPARENT resolved using rule 8 (wff -> arg .)
     SEMI            reduce using rule 8 (wff -> arg .)
     AND             reduce using rule 8 (wff -> arg .)
+    OR              reduce using rule 8 (wff -> arg .)
     RPARENT         reduce using rule 8 (wff -> arg .)
     COMMA           shift and go to state 19
 
@@ -175,38 +177,13 @@ state 6
 
 state 7
 
-    (11) wff -> OR . wff
-    (6) wff -> . ID LPARENT wff RPARENT
-    (7) wff -> . LPARENT wff RPARENT
-    (8) wff -> . arg
-    (9) wff -> . arg COMMA wff
-    (10) wff -> . wff AND wff
-    (11) wff -> . OR wff
-    (12) wff -> . NOT wff
-    (13) wff -> . LPARENT quant RPARENT LPARENT wff RPARENT
-    (3) arg -> . STRING
-    (4) arg -> . NUMBER
-    (5) arg -> . ID
-
-    ID              shift and go to state 4
-    LPARENT         shift and go to state 5
-    OR              shift and go to state 7
-    NOT             shift and go to state 8
-    STRING          shift and go to state 11
-    NUMBER          shift and go to state 12
-
-    wff                            shift and go to state 20
-    arg                            shift and go to state 21
-
-state 8
-
     (12) wff -> NOT . wff
     (6) wff -> . ID LPARENT wff RPARENT
     (7) wff -> . LPARENT wff RPARENT
     (8) wff -> . arg
     (9) wff -> . arg COMMA wff
     (10) wff -> . wff AND wff
-    (11) wff -> . OR wff
+    (11) wff -> . wff OR wff
     (12) wff -> . NOT wff
     (13) wff -> . LPARENT quant RPARENT LPARENT wff RPARENT
     (3) arg -> . STRING
@@ -215,15 +192,14 @@ state 8
 
     ID              shift and go to state 4
     LPARENT         shift and go to state 5
-    OR              shift and go to state 7
-    NOT             shift and go to state 8
-    STRING          shift and go to state 11
-    NUMBER          shift and go to state 12
+    NOT             shift and go to state 7
+    STRING          shift and go to state 10
+    NUMBER          shift and go to state 11
 
-    wff                            shift and go to state 22
+    wff                            shift and go to state 20
     arg                            shift and go to state 21
 
-state 9
+state 8
 
     (14) quant -> FORALL . quant
     (14) quant -> . FORALL quant
@@ -234,16 +210,16 @@ state 9
     (4) arg -> . NUMBER
     (5) arg -> . ID
 
-    FORALL          shift and go to state 9
-    EXISTS          shift and go to state 10
-    STRING          shift and go to state 11
-    NUMBER          shift and go to state 12
-    ID              shift and go to state 25
+    FORALL          shift and go to state 8
+    EXISTS          shift and go to state 9
+    STRING          shift and go to state 10
+    NUMBER          shift and go to state 11
+    ID              shift and go to state 24
 
-    quant                          shift and go to state 23
-    arg                            shift and go to state 24
+    quant                          shift and go to state 22
+    arg                            shift and go to state 23
 
-state 10
+state 9
 
     (15) quant -> EXISTS . quant
     (14) quant -> . FORALL quant
@@ -254,43 +230,45 @@ state 10
     (4) arg -> . NUMBER
     (5) arg -> . ID
 
-    FORALL          shift and go to state 9
-    EXISTS          shift and go to state 10
-    STRING          shift and go to state 11
-    NUMBER          shift and go to state 12
-    ID              shift and go to state 25
+    FORALL          shift and go to state 8
+    EXISTS          shift and go to state 9
+    STRING          shift and go to state 10
+    NUMBER          shift and go to state 11
+    ID              shift and go to state 24
 
-    quant                          shift and go to state 26
-    arg                            shift and go to state 24
+    quant                          shift and go to state 25
+    arg                            shift and go to state 23
 
-state 11
+state 10
 
     (3) arg -> STRING .
 
     COMMA           reduce using rule 3 (arg -> STRING .)
     SEMI            reduce using rule 3 (arg -> STRING .)
     AND             reduce using rule 3 (arg -> STRING .)
+    OR              reduce using rule 3 (arg -> STRING .)
     RPARENT         reduce using rule 3 (arg -> STRING .)
 
 
-state 12
+state 11
 
     (4) arg -> NUMBER .
 
     COMMA           reduce using rule 4 (arg -> NUMBER .)
     SEMI            reduce using rule 4 (arg -> NUMBER .)
     AND             reduce using rule 4 (arg -> NUMBER .)
+    OR              reduce using rule 4 (arg -> NUMBER .)
     RPARENT         reduce using rule 4 (arg -> NUMBER .)
 
 
-state 13
+state 12
 
     (1) waeStart -> wff SEMI .
 
     $end            reduce using rule 1 (waeStart -> wff SEMI .)
 
 
-state 14
+state 13
 
     (10) wff -> wff AND . wff
     (6) wff -> . ID LPARENT wff RPARENT
@@ -298,7 +276,7 @@ state 14
     (8) wff -> . arg
     (9) wff -> . arg COMMA wff
     (10) wff -> . wff AND wff
-    (11) wff -> . OR wff
+    (11) wff -> . wff OR wff
     (12) wff -> . NOT wff
     (13) wff -> . LPARENT quant RPARENT LPARENT wff RPARENT
     (3) arg -> . STRING
@@ -307,10 +285,33 @@ state 14
 
     ID              shift and go to state 4
     LPARENT         shift and go to state 5
-    OR              shift and go to state 7
-    NOT             shift and go to state 8
-    STRING          shift and go to state 11
-    NUMBER          shift and go to state 12
+    NOT             shift and go to state 7
+    STRING          shift and go to state 10
+    NUMBER          shift and go to state 11
+
+    wff                            shift and go to state 26
+    arg                            shift and go to state 21
+
+state 14
+
+    (11) wff -> wff OR . wff
+    (6) wff -> . ID LPARENT wff RPARENT
+    (7) wff -> . LPARENT wff RPARENT
+    (8) wff -> . arg
+    (9) wff -> . arg COMMA wff
+    (10) wff -> . wff AND wff
+    (11) wff -> . wff OR wff
+    (12) wff -> . NOT wff
+    (13) wff -> . LPARENT quant RPARENT LPARENT wff RPARENT
+    (3) arg -> . STRING
+    (4) arg -> . NUMBER
+    (5) arg -> . ID
+
+    ID              shift and go to state 4
+    LPARENT         shift and go to state 5
+    NOT             shift and go to state 7
+    STRING          shift and go to state 10
+    NUMBER          shift and go to state 11
 
     wff                            shift and go to state 27
     arg                            shift and go to state 21
@@ -330,7 +331,7 @@ state 16
     (8) wff -> . arg
     (9) wff -> . arg COMMA wff
     (10) wff -> . wff AND wff
-    (11) wff -> . OR wff
+    (11) wff -> . wff OR wff
     (12) wff -> . NOT wff
     (13) wff -> . LPARENT quant RPARENT LPARENT wff RPARENT
     (3) arg -> . STRING
@@ -339,10 +340,9 @@ state 16
 
     ID              shift and go to state 4
     LPARENT         shift and go to state 5
-    OR              shift and go to state 7
-    NOT             shift and go to state 8
-    STRING          shift and go to state 11
-    NUMBER          shift and go to state 12
+    NOT             shift and go to state 7
+    STRING          shift and go to state 10
+    NUMBER          shift and go to state 11
 
     wff                            shift and go to state 28
     arg                            shift and go to state 21
@@ -351,9 +351,11 @@ state 17
 
     (7) wff -> LPARENT wff . RPARENT
     (10) wff -> wff . AND wff
+    (11) wff -> wff . OR wff
 
     RPARENT         shift and go to state 29
-    AND             shift and go to state 14
+    AND             shift and go to state 13
+    OR              shift and go to state 14
 
 
 state 18
@@ -372,7 +374,7 @@ state 19
     (8) wff -> . arg
     (9) wff -> . arg COMMA wff
     (10) wff -> . wff AND wff
-    (11) wff -> . OR wff
+    (11) wff -> . wff OR wff
     (12) wff -> . NOT wff
     (13) wff -> . LPARENT quant RPARENT LPARENT wff RPARENT
     (14) quant -> . FORALL quant
@@ -385,12 +387,11 @@ state 19
 
     ID              shift and go to state 4
     LPARENT         shift and go to state 5
-    OR              shift and go to state 7
-    NOT             shift and go to state 8
-    FORALL          shift and go to state 9
-    EXISTS          shift and go to state 10
-    STRING          shift and go to state 11
-    NUMBER          shift and go to state 12
+    NOT             shift and go to state 7
+    FORALL          shift and go to state 8
+    EXISTS          shift and go to state 9
+    STRING          shift and go to state 10
+    NUMBER          shift and go to state 11
 
     arg                            shift and go to state 6
     wff                            shift and go to state 31
@@ -398,15 +399,19 @@ state 19
 
 state 20
 
-    (11) wff -> OR wff .
+    (12) wff -> NOT wff .
     (10) wff -> wff . AND wff
+    (11) wff -> wff . OR wff
 
   ! shift/reduce conflict for AND resolved as shift
-    SEMI            reduce using rule 11 (wff -> OR wff .)
-    RPARENT         reduce using rule 11 (wff -> OR wff .)
-    AND             shift and go to state 14
+  ! shift/reduce conflict for OR resolved as shift
+    SEMI            reduce using rule 12 (wff -> NOT wff .)
+    RPARENT         reduce using rule 12 (wff -> NOT wff .)
+    AND             shift and go to state 13
+    OR              shift and go to state 14
 
-  ! AND             [ reduce using rule 11 (wff -> OR wff .) ]
+  ! AND             [ reduce using rule 12 (wff -> NOT wff .) ]
+  ! OR              [ reduce using rule 12 (wff -> NOT wff .) ]
 
 
 state 21
@@ -415,6 +420,7 @@ state 21
     (9) wff -> arg . COMMA wff
 
     AND             reduce using rule 8 (wff -> arg .)
+    OR              reduce using rule 8 (wff -> arg .)
     SEMI            reduce using rule 8 (wff -> arg .)
     RPARENT         reduce using rule 8 (wff -> arg .)
     COMMA           shift and go to state 33
@@ -422,26 +428,13 @@ state 21
 
 state 22
 
-    (12) wff -> NOT wff .
-    (10) wff -> wff . AND wff
-
-  ! shift/reduce conflict for AND resolved as shift
-    SEMI            reduce using rule 12 (wff -> NOT wff .)
-    RPARENT         reduce using rule 12 (wff -> NOT wff .)
-    AND             shift and go to state 14
-
-  ! AND             [ reduce using rule 12 (wff -> NOT wff .) ]
-
-
-state 23
-
     (14) quant -> FORALL quant .
 
     SEMI            reduce using rule 14 (quant -> FORALL quant .)
     RPARENT         reduce using rule 14 (quant -> FORALL quant .)
 
 
-state 24
+state 23
 
     (16) quant -> arg . COMMA quant
     (17) quant -> arg .
@@ -451,7 +444,7 @@ state 24
     RPARENT         reduce using rule 17 (quant -> arg .)
 
 
-state 25
+state 24
 
     (5) arg -> ID .
 
@@ -460,7 +453,7 @@ state 25
     RPARENT         reduce using rule 5 (arg -> ID .)
 
 
-state 26
+state 25
 
     (15) quant -> EXISTS quant .
 
@@ -468,26 +461,49 @@ state 26
     RPARENT         reduce using rule 15 (quant -> EXISTS quant .)
 
 
-state 27
+state 26
 
     (10) wff -> wff AND wff .
     (10) wff -> wff . AND wff
+    (11) wff -> wff . OR wff
 
   ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
     SEMI            reduce using rule 10 (wff -> wff AND wff .)
     RPARENT         reduce using rule 10 (wff -> wff AND wff .)
-    AND             shift and go to state 14
+    AND             shift and go to state 13
+    OR              shift and go to state 14
 
   ! AND             [ reduce using rule 10 (wff -> wff AND wff .) ]
+  ! OR              [ reduce using rule 10 (wff -> wff AND wff .) ]
+
+
+state 27
+
+    (11) wff -> wff OR wff .
+    (10) wff -> wff . AND wff
+    (11) wff -> wff . OR wff
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    SEMI            reduce using rule 11 (wff -> wff OR wff .)
+    RPARENT         reduce using rule 11 (wff -> wff OR wff .)
+    AND             shift and go to state 13
+    OR              shift and go to state 14
+
+  ! AND             [ reduce using rule 11 (wff -> wff OR wff .) ]
+  ! OR              [ reduce using rule 11 (wff -> wff OR wff .) ]
 
 
 state 28
 
     (6) wff -> ID LPARENT wff . RPARENT
     (10) wff -> wff . AND wff
+    (11) wff -> wff . OR wff
 
     RPARENT         shift and go to state 35
-    AND             shift and go to state 14
+    AND             shift and go to state 13
+    OR              shift and go to state 14
 
 
 state 29
@@ -496,6 +512,7 @@ state 29
 
     SEMI            reduce using rule 7 (wff -> LPARENT wff RPARENT .)
     AND             reduce using rule 7 (wff -> LPARENT wff RPARENT .)
+    OR              reduce using rule 7 (wff -> LPARENT wff RPARENT .)
     RPARENT         reduce using rule 7 (wff -> LPARENT wff RPARENT .)
 
 
@@ -510,13 +527,17 @@ state 31
 
     (9) wff -> arg COMMA wff .
     (10) wff -> wff . AND wff
+    (11) wff -> wff . OR wff
 
   ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
     SEMI            reduce using rule 9 (wff -> arg COMMA wff .)
     RPARENT         reduce using rule 9 (wff -> arg COMMA wff .)
-    AND             shift and go to state 14
+    AND             shift and go to state 13
+    OR              shift and go to state 14
 
   ! AND             [ reduce using rule 9 (wff -> arg COMMA wff .) ]
+  ! OR              [ reduce using rule 9 (wff -> arg COMMA wff .) ]
 
 
 state 32
@@ -535,7 +556,7 @@ state 33
     (8) wff -> . arg
     (9) wff -> . arg COMMA wff
     (10) wff -> . wff AND wff
-    (11) wff -> . OR wff
+    (11) wff -> . wff OR wff
     (12) wff -> . NOT wff
     (13) wff -> . LPARENT quant RPARENT LPARENT wff RPARENT
     (3) arg -> . STRING
@@ -544,10 +565,9 @@ state 33
 
     ID              shift and go to state 4
     LPARENT         shift and go to state 5
-    OR              shift and go to state 7
-    NOT             shift and go to state 8
-    STRING          shift and go to state 11
-    NUMBER          shift and go to state 12
+    NOT             shift and go to state 7
+    STRING          shift and go to state 10
+    NUMBER          shift and go to state 11
 
     arg                            shift and go to state 21
     wff                            shift and go to state 31
@@ -563,13 +583,13 @@ state 34
     (4) arg -> . NUMBER
     (5) arg -> . ID
 
-    FORALL          shift and go to state 9
-    EXISTS          shift and go to state 10
-    STRING          shift and go to state 11
-    NUMBER          shift and go to state 12
-    ID              shift and go to state 25
+    FORALL          shift and go to state 8
+    EXISTS          shift and go to state 9
+    STRING          shift and go to state 10
+    NUMBER          shift and go to state 11
+    ID              shift and go to state 24
 
-    arg                            shift and go to state 24
+    arg                            shift and go to state 23
     quant                          shift and go to state 32
 
 state 35
@@ -578,6 +598,7 @@ state 35
 
     SEMI            reduce using rule 6 (wff -> ID LPARENT wff RPARENT .)
     AND             reduce using rule 6 (wff -> ID LPARENT wff RPARENT .)
+    OR              reduce using rule 6 (wff -> ID LPARENT wff RPARENT .)
     RPARENT         reduce using rule 6 (wff -> ID LPARENT wff RPARENT .)
 
 
@@ -589,7 +610,7 @@ state 36
     (8) wff -> . arg
     (9) wff -> . arg COMMA wff
     (10) wff -> . wff AND wff
-    (11) wff -> . OR wff
+    (11) wff -> . wff OR wff
     (12) wff -> . NOT wff
     (13) wff -> . LPARENT quant RPARENT LPARENT wff RPARENT
     (3) arg -> . STRING
@@ -598,10 +619,9 @@ state 36
 
     ID              shift and go to state 4
     LPARENT         shift and go to state 5
-    OR              shift and go to state 7
-    NOT             shift and go to state 8
-    STRING          shift and go to state 11
-    NUMBER          shift and go to state 12
+    NOT             shift and go to state 7
+    STRING          shift and go to state 10
+    NUMBER          shift and go to state 11
 
     wff                            shift and go to state 37
     arg                            shift and go to state 21
@@ -610,9 +630,11 @@ state 37
 
     (13) wff -> LPARENT quant RPARENT LPARENT wff . RPARENT
     (10) wff -> wff . AND wff
+    (11) wff -> wff . OR wff
 
     RPARENT         shift and go to state 38
-    AND             shift and go to state 14
+    AND             shift and go to state 13
+    OR              shift and go to state 14
 
 
 state 38
@@ -621,14 +643,19 @@ state 38
 
     SEMI            reduce using rule 13 (wff -> LPARENT quant RPARENT LPARENT wff RPARENT .)
     AND             reduce using rule 13 (wff -> LPARENT quant RPARENT LPARENT wff RPARENT .)
+    OR              reduce using rule 13 (wff -> LPARENT quant RPARENT LPARENT wff RPARENT .)
     RPARENT         reduce using rule 13 (wff -> LPARENT quant RPARENT LPARENT wff RPARENT .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
 WARNING: shift/reduce conflict for AND in state 20 resolved as shift
-WARNING: shift/reduce conflict for AND in state 22 resolved as shift
+WARNING: shift/reduce conflict for OR in state 20 resolved as shift
+WARNING: shift/reduce conflict for AND in state 26 resolved as shift
+WARNING: shift/reduce conflict for OR in state 26 resolved as shift
 WARNING: shift/reduce conflict for AND in state 27 resolved as shift
+WARNING: shift/reduce conflict for OR in state 27 resolved as shift
 WARNING: shift/reduce conflict for AND in state 31 resolved as shift
+WARNING: shift/reduce conflict for OR in state 31 resolved as shift
 WARNING: reduce/reduce conflict in state 6 resolved using rule (wff -> arg)
 WARNING: rejected rule (quant -> arg) in state 6

@@ -1,4 +1,5 @@
 import re
+
 from WFFParser import parser
 
 def eval(tree):
@@ -11,23 +12,23 @@ def eval(tree):
   #print('*************')
   if(tree[0]) == 'WFF':
     elementsOfWFF = eval_wff(tree)
-    #print('THESE ARE THE ELEMENTS WE EXTRACTED')
-    #print(elementsOfWFF)
+    print('THESE ARE THE ELEMENTS WE EXTRACTED')
+    print(elementsOfWFF)
   if(tree[0][0] == 'QUANT'):
-    #print('WE HAVE A QUANT STATEMENT WITH THE FOLLOWING ELEMENTS!')
-    #print(tree[0][1])
+    print('WE HAVE A QUANT STATEMENT WITH THE FOLLOWING ELEMENTS!')
+    print(tree[0][1])
     elementsOfQuant = eval_quant(tree[0][1])
     elementsOfWFF = eval_wff(tree[1])
-  #print('ALL OF THE QUANT STATEMENTS')
-  #print(elementsOfQuant)
-  #print('ALL OF THE WFF STATEMENTS')
-  #print(elementsOfWFF)
-  #print('HOWEVER, WE STILL NEED TO FINISH CLEANING THIS SHIT UP')
+  print('ALL OF THE QUANT STATEMENTS')
+  print(elementsOfQuant)
+  print('ALL OF THE WFF STATEMENTS')
+  print(elementsOfWFF)
+  print('HOWEVER, WE STILL NEED TO FINISH CLEANING THIS SHIT UP')
   for x in elementsOfWFF:
     m = re.match("MaRkEd", x)
     if m:
-      #print('THIS IS IN THE WRONG PLACE!!!')
-      #print(x)
+      print('THIS IS IN THE WRONG PLACE!!!')
+      print(x)
       elementsOfQuant.append(x)
       counter = counter + 1
   for x in range((len(elementsOfQuant)-counter),len(elementsOfQuant)):
@@ -37,14 +38,18 @@ def eval(tree):
   for x in (range(len(elementsOfWFF))):
     m = re.match("MaRkEd", elementsOfWFF[x])
     if m:
-        #print('I NEED TO REMOVE THIS ELEMENT')
+        print('I NEED TO REMOVE THIS ELEMENT')
         listOfElementsInWrongPlace.append(x)
   for x in range(len(listOfElementsInWrongPlace)):
       elementsOfWFF[listOfElementsInWrongPlace[x]] = ''
-  #for x in elementsOfWFF:
-    #if x not in elementsOfQuant:
-      #print(str(x) + ' is a free variable!')
-  #print(listOfElementsInWrongPlace)
+  for x in elementsOfWFF:
+    if x not in elementsOfQuant:
+      print(str(x) + ' is a free variable!')
+  print(listOfElementsInWrongPlace)
+  for i in range(len(elementsOfQuant)):
+    elementsOfQuant[i] = elementsOfQuant[i].upper()
+  for i in range(len(elementsOfWFF)):
+    elementsOfWFF[i] = elementsOfWFF[i].upper()
   #print('QUANT VARIABLES: ' + str(elementsOfQuant))
   #print('WFF VARIABLES: '+ str(elementsOfWFF))
   for x in elementsOfWFF:
@@ -52,7 +57,7 @@ def eval(tree):
         first_char = x[0]
         if x not in elementsOfQuant and first_char != '\'':
           #print(str(x) + ' is a free variable!')
-          listOfFreeVariables.append(x.upper())
+          listOfFreeVariables.append(x)
    
   if len(listOfFreeVariables) != 0:
     return('OPEN WFF with Free Variables: ' + str(listOfFreeVariables))
@@ -67,8 +72,8 @@ def eval_wff(tree):
   listOfElementsInWFF = []
   for x in range(len(tree)):
     if x%2 == 1:
-      #print('THESE ARE THE ELEMENTS FROM WFF NUMBER ' + str(((x-1)/2)+1))
-      #print(tree[x])
+      print('THESE ARE THE ELEMENTS FROM WFF NUMBER ' + str(((x-1)/2)+1))
+      print(tree[x])
       for y in tree[x]:
         if isinstance(y,str):
           listOfElementsInWFF.append(y)
@@ -77,17 +82,17 @@ def eval_wff(tree):
           listOfElementsInWFF.append(yNew)
         else:
           if y[0] == 'QUANT':
-            #print('WE HAVE AN ISSUE HERE!!!!!')
-            #print(str(y) + ' is not element but is a QUANT!')
-            #print(str(y[1]) + ' are all elements that we will have to add to the bound variables')
+            print('WE HAVE AN ISSUE HERE!!!!!')
+            print(str(y) + ' is not element but is a QUANT!')
+            print(str(y[1]) + ' are all elements that we will have to add to the bound variables')
             for q in range(len(y[1])):
-              #print('original variable is '+ str(y[1][q]))
+              print('original variable is '+ str(y[1][q]))
               y[1][q] = 'MaRkEd'+(y[1][q])
-              #print('new variable is ' + y[1][q])
+              print('new variable is ' + y[1][q])
               listOfElementsInWFF.append(y[1][q])
 
           if y[0] == 'WFF':
-            #print(str(y) + ' is not element but is a WFF!')
+            print(str(y) + ' is not element but is a WFF!')
             for z in range(len(y[1])):
               listOfElementsInWFF.append(y[1][z])
   return listOfElementsInWFF
@@ -120,7 +125,7 @@ def main():
     except Exception as inst:
       print(inst.args[0])
       continue
-    #print(tree)
+    print(tree)
     try:
      answer = eval(tree)
      if isinstance(answer,str):
